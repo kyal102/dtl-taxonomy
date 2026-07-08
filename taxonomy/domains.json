@@ -1,0 +1,106 @@
+{
+  "$comment": "DTL claim taxonomy — the shared vocabulary between AI systems, verification gates, and auditors. Companies extend this via PR: add a claim_type under an existing domain, or propose a new domain. The taxonomy is the OPEN interface; verification engines implementing it may be open (lite gates) or proprietary (hosted Labs).",
+  "version": "0.1.0",
+  "verdict_classes": {
+    "pass": "The claim satisfied every deterministic check the gate ran. Never a statement of physical/legal/medical truth — only rule-compliance within the gate's documented competence.",
+    "fail": "The claim violated at least one deterministic check; the reason names the rule and the evidence.",
+    "refuse": "The claim is outside the gate's competence or under-specified. The gate declines to rule rather than guess.",
+    "malformed": "The input could not be parsed into a checkable claim."
+  },
+  "domains": [
+    {
+      "domain": "physics",
+      "gate": "unitgate",
+      "lite_repo": "https://github.com/kyal102/unitgate",
+      "claim_types": [
+        {"type": "equation_dimensional_consistency", "example": "E = 0.5*m*v**2 + m*g*h", "statuses": {"DIMENSIONALLY_VALID": "pass", "DIMENSIONALLY_INVALID": "fail", "AMBIGUOUS_NEEDS_CLARIFICATION": "refuse", "MALFORMED_INPUT": "malformed"}}
+      ]
+    },
+    {
+      "domain": "chemistry",
+      "gate": "elementgate",
+      "lite_repo": "https://github.com/kyal102/elementgate",
+      "claim_types": [
+        {"type": "formula_validity", "example": "C6H12O6", "statuses": {"VALID": "pass", "INVALID": "fail", "MALFORMED": "malformed"}},
+        {"type": "reaction_balance", "example": "2H2 + O2 -> 2H2O", "statuses": {"BALANCED": "pass", "UNBALANCED": "fail", "MALFORMED": "malformed"}}
+      ]
+    },
+    {
+      "domain": "mathematics",
+      "gate": "supermath",
+      "lite_repo": null,
+      "claim_types": [
+        {"type": "calculation_verification", "example": "definite integral / arithmetic / algebraic identity re-derivation", "statuses": {"VERIFIED": "pass", "REFUTED": "fail", "UNSUPPORTED": "refuse"}}
+      ]
+    },
+    {
+      "domain": "written_claims",
+      "gate": "claimgate",
+      "lite_repo": "https://github.com/kyal102/claimgate",
+      "claim_types": [
+        {"type": "claim_extraction", "example": "extract checkable claims from prose", "statuses": {"EXTRACTED": "pass", "NO_CLAIMS": "refuse"}},
+        {"type": "claim_support", "example": "\"proves the Riemann Hypothesis\"", "statuses": {"SUPPORTED": "pass", "UNSUPPORTED_CLAIM": "fail", "OUT_OF_SCOPE": "refuse"}}
+      ]
+    },
+    {
+      "domain": "documentation_hygiene",
+      "gate": "claimlint",
+      "lite_repo": "https://github.com/kyal102/claimlint",
+      "claim_types": [
+        {"type": "overclaim_lint", "example": "\"100% accurate\", \"world's first\"", "statuses": {"CLEAN": "pass", "FLAGGED": "fail"}}
+      ]
+    },
+    {
+      "domain": "evidence",
+      "gate": "evidencepack",
+      "lite_repo": "https://github.com/kyal102/evidencepack",
+      "claim_types": [
+        {"type": "receipt_seal", "example": "hash-seal a verification result", "statuses": {"SEALED": "pass", "SEAL_FAILED": "fail"}},
+        {"type": "receipt_replay", "example": "re-run a sealed check, detect drift", "statuses": {"REPRODUCED": "pass", "DRIFTED": "fail", "UNREPLAYABLE": "refuse"}}
+      ]
+    },
+    {
+      "domain": "statistics",
+      "gate": "statsgate",
+      "lite_repo": "https://github.com/kyal102/statsgate",
+      "claim_types": [
+        {"type": "statistical_claim_check", "example": "reported p-value / CI / effect-size consistency", "statuses": {"CONSISTENT": "pass", "INCONSISTENT": "fail", "INSUFFICIENT_DATA": "refuse"}}
+      ]
+    },
+    {
+      "domain": "clinical",
+      "gate": "medgate",
+      "lite_repo": "https://github.com/kyal102/medgate",
+      "access": "request-access (medical liability)",
+      "claim_types": [
+        {"type": "drug_interaction", "example": "warfarin + aspirin", "statuses": {"NO_KNOWN_INTERACTION": "pass", "INTERACTION_FLAGGED": "fail", "UNKNOWN_AGENT": "refuse"}},
+        {"type": "dose_range_check", "example": "paediatric dose within reference range", "statuses": {"IN_RANGE": "pass", "OUT_OF_RANGE": "fail", "UNKNOWN_AGENT": "refuse"}}
+      ]
+    },
+    {
+      "domain": "hardware_rtl",
+      "gate": "chipgate",
+      "lite_repo": "https://github.com/kyal102/chipgate",
+      "claim_types": [
+        {"type": "rtl_safety_lint", "example": "Verilog/SystemVerilog unsafe-pattern scan", "statuses": {"CLEAN": "pass", "VIOLATIONS": "fail", "UNPARSEABLE": "malformed"}}
+      ]
+    },
+    {
+      "domain": "theoretical_claims",
+      "gate": "theorygate",
+      "lite_repo": "https://github.com/kyal102/theorygate",
+      "claim_types": [
+        {"type": "theory_bookkeeping", "example": "internal consistency of a claimed formal system", "statuses": {"CONSISTENT": "pass", "INCONSISTENT": "fail", "NOT_FORMALISABLE": "refuse"}}
+      ]
+    },
+    {
+      "domain": "aerospace",
+      "gate": "orbitgate",
+      "lite_repo": "https://github.com/kyal102/orbitgate",
+      "status_note": "preview — hosted backend not yet callable",
+      "claim_types": [
+        {"type": "conjunction_screen", "example": "TLE pair miss-distance screening", "statuses": {"CLEAR": "pass", "CONJUNCTION_RISK": "fail", "STALE_ELEMENTS": "refuse"}}
+      ]
+    }
+  ]
+}

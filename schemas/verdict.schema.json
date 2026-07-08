@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kyal102/dtl-taxonomy/schemas/verdict.schema.json",
+  "title": "DTL Gate Verdict",
+  "description": "The response shape every DTL gate returns (hosted API and lite tools alike). Matches the live API at jvi3.com/api/apigate/catalog.",
+  "type": "object",
+  "required": ["tool", "status", "passed"],
+  "properties": {
+    "system": {"type": "string", "description": "Gate name, e.g. 'UnitGate'"},
+    "version": {"type": "string"},
+    "tool": {"type": "string", "description": "Gate id from the taxonomy, e.g. 'unitgate'"},
+    "input": {"type": "string", "description": "The claim as submitted"},
+    "normalized_input": {"type": "string"},
+    "mode": {"type": "string"},
+    "operation": {"type": "string", "description": "Claim type from the taxonomy"},
+    "status": {"type": "string", "description": "Gate-specific status; maps to a verdict_class (pass/fail/refuse/malformed) via taxonomy/domains.json"},
+    "passed": {"type": "boolean", "description": "True iff status maps to verdict_class 'pass'"},
+    "result": {"type": "string", "description": "One-line human-readable verdict"},
+    "method": {"type": "string", "description": "How the check was performed (deterministic method statement)"},
+    "proof_evidence": {
+      "type": "object",
+      "description": "Gate-specific structured evidence (e.g. lhs_dimension / rhs_dimension / reason for unitgate). Always sufficient for a human to re-derive the verdict."
+    },
+    "certificate_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "SHA-256 seal over the verdict; feed to evidencepack for replay"},
+    "lane_id": {"type": "string"},
+    "model_override": {"type": "boolean", "description": "Always false: no model may override a gate verdict"},
+    "warm_lane": {"type": "boolean"},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

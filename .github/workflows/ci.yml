@@ -1,0 +1,15 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Taxonomy + schema + client tests
+        run: python -m unittest discover -s tests -v
+      - name: JSON well-formed
+        run: |
+          python -c "import json; json.load(open('taxonomy/domains.json'))"
+          python -c "import json; json.load(open('schemas/verdict.schema.json'))"

@@ -60,4 +60,4 @@ It is **not** the verification engines. Lite gates are open (MIT, linked above);
 
 ---
 
-*Method patent-filed (AU provisional applications 2026905289, 2026905506). Maintained by EcoKure — kyal11105@gmail.com.*
+*Method patent-filed (AU provisional applications 2026905289, 2026905506). Maintained by EcoKure Pty Ltd (ACN 699 693 779) — kyal11105@gmail.com.*
